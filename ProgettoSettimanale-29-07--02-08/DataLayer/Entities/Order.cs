@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProgettoSettimanale_29_07__02_08.Models.Entities
+namespace ProgettoSettimanale_29_07__02_08.DataLayer.Entities
 {
     public class Order
     {

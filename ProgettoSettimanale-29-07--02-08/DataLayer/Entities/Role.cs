@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace ProgettoSettimanale_29_07__02_08.Models.Entities
+namespace ProgettoSettimanale_29_07__02_08.DataLayer.Entities
 {
     public class Role
     {

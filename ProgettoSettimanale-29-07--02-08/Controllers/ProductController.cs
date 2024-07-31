@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgettoSettimanale_29_07__02_08.Context;
-using ProgettoSettimanale_29_07__02_08.Models.Entities;
+using ProgettoSettimanale_29_07__02_08.DataLayer.Entities;
 using System.Collections.Generic;
 
 namespace ProgettoSettimanale_29_07__02_08.Controllers
@@ -35,11 +35,22 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateProduct(Product product)
+        public async Task<IActionResult> CreateProduct(Product product, List<int> ingredientIds)
         {
             if (ModelState.IsValid)
             {
+                product.Ingredients = product.Ingredients?.Where(i => !string.IsNullOrWhiteSpace(i.Name)).ToList()!;
                 _dataContext.Add(product);
+
+                foreach (var ingredientId in ingredientIds)
+                {
+                    var ingredient = await _dataContext.Ingredients.FindAsync(ingredientId);
+                    if (ingredient != null)
+                    {
+                        product.Ingredients.Add(ingredient);
+                    }
+                }
+
                 await _dataContext.SaveChangesAsync();
                 return RedirectToAction(nameof(ProductList));
             }

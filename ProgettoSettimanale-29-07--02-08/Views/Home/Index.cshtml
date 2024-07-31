@@ -1,8 +1,37 @@
-﻿@{
+﻿@model IEnumerable<ProgettoSettimanale_29_07__02_08.DataLayer.Entities.Product>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">HomePage</h1>
+    @foreach(var p in Model)
+    {
+        <div class="card col-md-3">
+        <img src="@p.PhotoUrl" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">@p.Name</h5>
+              <p class="card-text">
+                  Ingredienti:
+                    @if (p.Ingredients != null && p.Ingredients.Any())
+                    {
+                        <ul>
+                            @foreach (var ingredient in p.Ingredients)
+                            {
+                                <li>@ingredient.Name</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>Ingredienti non disponibili</span>
+                    }
+              </p>
+              <p>Tempo di consegna: @p.DeliveryTime min</p>
+              <p>@p.Price.ToString("C")</p>
+              <a href="#" class="btn btn-primary">Aggungi al carrello</a>
+            </div>
+        </div>
+    }
 </div>

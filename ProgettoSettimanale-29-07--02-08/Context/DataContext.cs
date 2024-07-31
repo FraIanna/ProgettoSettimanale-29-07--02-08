@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProgettoSettimanale_29_07__02_08.Models.Entities;
+using ProgettoSettimanale_29_07__02_08.DataLayer.Entities;
 
 namespace ProgettoSettimanale_29_07__02_08.Context
 {
@@ -16,5 +16,18 @@ namespace ProgettoSettimanale_29_07__02_08.Context
         public virtual DbSet<Order> Orders { get; set; }
 
         public DataContext(DbContextOptions<DataContext> opt) : base(opt) { }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(p => p.Ingredients)
+                .WithMany(i => i.Products)
+                .UsingEntity<Dictionary<string, object>>(
+                    "IngredientProduct",
+                    j => j.HasOne<Ingredient>().WithMany().HasForeignKey("IngredientsId"),
+                    j => j.HasOne<Product>().WithMany().HasForeignKey("ProductsId"));
+        }
     }
 }

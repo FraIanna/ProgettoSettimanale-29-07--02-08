@@ -1,4 +1,4 @@
-﻿@model ProgettoSettimanale_29_07__02_08.Models.Entities.Product
+﻿@model ProgettoSettimanale_29_07__02_08.DataLayer.Entities.Product
 
 @{
     ViewData["Title"] = "Delete";
@@ -24,10 +24,10 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Photo)
+            @Html.DisplayNameFor(model => model.PhotoUrl)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Photo)
+            @Html.DisplayFor(model => model.PhotoUrl)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DeliveryTime)

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ProgettoSettimanale_29_07__02_08.Models.Entities
+namespace ProgettoSettimanale_29_07__02_08.DataLayer.Entities
 {
     public class Product
     {
@@ -16,10 +16,10 @@ namespace ProgettoSettimanale_29_07__02_08.Models.Entities
         public decimal Price { get; set; }
 
         [Required]
-        [StringLength(128)]
-        public required byte[] Photo { get; set; }
+        [StringLength(256)]
+        public required string PhotoUrl { get; set; }
 
-        [Range(0,60)]
+        [Range(0, 60)]
         public int DeliveryTime { get; set; }
 
         public List<Ingredient> Ingredients { get; set; } = [];
