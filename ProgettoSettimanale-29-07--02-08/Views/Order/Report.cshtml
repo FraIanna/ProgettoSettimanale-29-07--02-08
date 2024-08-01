@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Report";
+}
+
+<h1>Report Giornaliero</h1>
+
+<div id="report">
+    <p>Numero totale di ordini evasi: <span id="totalOrders"></span></p>
+    <p>Totale incassato: <span id="totalIncome"></span></p>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("DailyReport", "Orders")',
+                method: 'GET',
+                success: function (data) {
+                    $('#totalOrders').text(data.totalOrders);
+                    $('#totalIncome').text(data.totalIncome.toFixed(2) + " €");
+                }
+            });
+        });
+    </script>
+}

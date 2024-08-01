@@ -15,6 +15,8 @@ namespace ProgettoSettimanale_29_07__02_08.Context
 
         public virtual DbSet<Order> Orders { get; set; }
 
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
+
         public DataContext(DbContextOptions<DataContext> opt) : base(opt) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

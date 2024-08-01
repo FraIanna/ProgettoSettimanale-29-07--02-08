@@ -1,11 +1,17 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using ProgettoSettimanale_29_07__02_08.BusinessLayer;
 using ProgettoSettimanale_29_07__02_08.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services
+    .AddScoped<IProductService, ProductService>()
+    .AddScoped<ICartService, CartService>();
+;
 
 var conn = builder.Configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer(conn));

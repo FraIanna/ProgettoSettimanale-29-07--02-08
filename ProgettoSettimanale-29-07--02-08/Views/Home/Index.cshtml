@@ -30,7 +30,15 @@
               </p>
               <p>Tempo di consegna: @p.DeliveryTime min</p>
               <p>@p.Price.ToString("C")</p>
-              <a href="#" class="btn btn-primary">Aggungi al carrello</a>
+                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="productId" value="@p.Id" />
+                    <div class="form-group">
+                        <label for="quantity">Quantità:</label>
+                        <input type="number" name="quantity" value="1" min="1" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Aggungi al carrello</button>
+                </form>
             </div>
         </div>
     }

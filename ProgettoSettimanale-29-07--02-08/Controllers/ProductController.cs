@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ProgettoSettimanale_29_07__02_08.BusinessLayer;
 using ProgettoSettimanale_29_07__02_08.Context;
 using ProgettoSettimanale_29_07__02_08.DataLayer.Entities;
 using System.Collections.Generic;
@@ -9,22 +10,17 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
-        private readonly DataContext _dataContext;
+        private readonly IProductService _productService;
 
-        public ProductController(DataContext dataContext, ILogger<ProductController> logger)
+        public ProductController(IProductService productService, ILogger<ProductController> logger)
         {
             _logger = logger;
-            _dataContext = dataContext;
-        }
-
-        private bool ProductExists(int id)
-        {
-            return _dataContext.Products.Any(e => e.Id == id);
+            _productService = productService;
         }
 
         public async Task<IActionResult> ProductList()
         {
-            var products = await _dataContext.Products.ToListAsync();
+            var products = await _productService.GetAllProductsAsync();
             return View(products);
         }
 
@@ -39,19 +35,7 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
         {
             if (ModelState.IsValid)
             {
-                product.Ingredients = product.Ingredients?.Where(i => !string.IsNullOrWhiteSpace(i.Name)).ToList()!;
-                _dataContext.Add(product);
-
-                foreach (var ingredientId in ingredientIds)
-                {
-                    var ingredient = await _dataContext.Ingredients.FindAsync(ingredientId);
-                    if (ingredient != null)
-                    {
-                        product.Ingredients.Add(ingredient);
-                    }
-                }
-
-                await _dataContext.SaveChangesAsync();
+                await _productService.CreateProductAsync(product, ingredientIds);
                 return RedirectToAction(nameof(ProductList));
             }
             return View(product);
@@ -64,7 +48,7 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
                 return NotFound();
             }
 
-            var product = await _dataContext.Products.FindAsync(id);
+            var product = await _productService.GetProductByIdAsync(id.Value);
             if (product == null)
             {
                 return NotFound();
@@ -86,12 +70,11 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
             {
                 try
                 {
-                    _dataContext.Update(product);
-                    await _dataContext.SaveChangesAsync();
+                    await _productService.UpdateProductAsync(product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!_productService.ProductExists(product.Id))
                     {
                         return NotFound();
                     }
@@ -112,8 +95,7 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
                 return NotFound();
             }
 
-            var product = await _dataContext.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var product = await _productService.GetProductByIdAsync(id.Value);
             if (product == null)
             {
                 return NotFound();
@@ -126,9 +108,7 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _dataContext.Products.FindAsync(id);
-            _dataContext.Products.Remove(product!);
-            await _dataContext.SaveChangesAsync();
+            await _productService.DeleteProductAsync(id);
             return RedirectToAction(nameof(ProductList));
         }
 
@@ -139,8 +119,7 @@ namespace ProgettoSettimanale_29_07__02_08.Controllers
                 return NotFound();
             }
 
-            var product = await _dataContext.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var product = await _productService.GetProductByIdAsync(id.Value);
             if (product == null)
             {
                 return NotFound();

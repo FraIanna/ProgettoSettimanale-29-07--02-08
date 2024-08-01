@@ -1,0 +1,34 @@
+﻿@model ProgettoSettimanale_29_07__02_08.DataLayer.Entities.Order
+
+@{
+    ViewData["Title"] = "OrderConfirmation";
+}
+
+<h1>Conferma Ordine</h1>
+
+<p>Grazie per il tuo ordine! Ecco i dettagli:</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Prodotto</th>
+            <th>Quantità</th>
+            <th>Prezzo</th>
+            <th>Totale</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Quantity</td>
+                <td>@item.Product.Price.ToString("C")</td>
+                <td>@(item.Quantity * item.Product.Price).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>Indirizzo di Spedizione: @Model.Address</p>
+<p>Note: @Model.Notes</p>
+<p>Totale: @(Model.Items.Sum(item => item.Quantity * item.Product.Price)).ToString("C")</p>
