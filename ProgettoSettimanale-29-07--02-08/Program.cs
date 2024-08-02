@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using ProgettoSettimanale_29_07__02_08.BusinessLayer;
 using ProgettoSettimanale_29_07__02_08.Context;
 
@@ -10,7 +11,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services
     .AddScoped<IProductService, ProductService>()
-    .AddScoped<ICartService, CartService>();
+    .AddScoped<ICartService, CartService>()
+    .AddScoped<IOrderService, OrderService>()
 ;
 
 var conn = builder.Configuration.GetConnectionString("SqlServer");
@@ -22,10 +24,18 @@ builder.Services
         opt.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         opt.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
-    .AddCookie(opt =>
-        opt.LoginPath = "/Account/Login"
-    )
+    .AddCookie(opt => {
+        opt.LoginPath = "/Account/Login";
+        opt.AccessDeniedPath = "/Account/AccessDenied";
+    })
     ;
+
+builder.Services.AddAuthorization(opt =>
+    {
+        opt.AddPolicy(ProgettoSettimanale_29_07__02_08.Policies.isLoggedAdmin, cfg => cfg.RequireRole("Admin"));
+        opt.AddPolicy(ProgettoSettimanale_29_07__02_08.Policies.baseUser, cfg => cfg.RequireRole("User"));
+        opt.AddPolicy(ProgettoSettimanale_29_07__02_08.Policies.isLogged, cfg => cfg.RequireAuthenticatedUser());
+    });
 
 var app = builder.Build();
 

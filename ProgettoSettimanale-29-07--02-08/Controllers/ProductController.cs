@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgettoSettimanale_29_07__02_08.BusinessLayer;
 using ProgettoSettimanale_29_07__02_08.Context;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 
 namespace ProgettoSettimanale_29_07__02_08.Controllers
 {
+    [Authorize (Policies.isLoggedAdmin)]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;

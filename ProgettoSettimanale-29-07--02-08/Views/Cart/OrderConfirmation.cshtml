@@ -3,32 +3,52 @@
 @{
     ViewData["Title"] = "OrderConfirmation";
 }
-
-<h1>Conferma Ordine</h1>
-
-<p>Grazie per il tuo ordine! Ecco i dettagli:</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Prodotto</th>
-            <th>Quantità</th>
-            <th>Prezzo</th>
-            <th>Totale</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Items)
-        {
+<div class="row custom-bg-2 text-light p-3 rounded">
+    <h1>Conferma Ordine</h1>
+    <hr />
+    <p class="fs-5">Grazie per il tuo ordine! Ecco i dettagli:</p>
+    <table class="table">
+        <thead>
             <tr>
-                <td>@item.Product.Name</td>
-                <td>@item.Quantity</td>
-                <td>@item.Product.Price.ToString("C")</td>
-                <td>@(item.Quantity * item.Product.Price).ToString("C")</td>
+                <th>Prodotto</th>
+                <th>Quantità</th>
+                <th>Prezzo</th>
+                <th>Totale</th>
             </tr>
-        }
-    </tbody>
-</table>
-<p>Indirizzo di Spedizione: @Model.Address</p>
-<p>Note: @Model.Notes</p>
-<p>Totale: @(Model.Items.Sum(item => item.Quantity * item.Product.Price)).ToString("C")</p>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Price.ToString("C")</td>
+                    <td>@((item.Quantity * item.Product.Price).ToString("C"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="custom-bg p-3 rounded">
+        <p class="border-bottom">
+            <i>Indirizzo di Spedizione: </i>
+            @Model.Address
+        </p>
+        <p class="border-bottom">
+            <i>Note:</i>
+            @if(Model.Notes != string.Empty)
+            {
+                @Model.Notes
+            }
+            else
+            {
+                <span>
+                Nessuna Nota
+                </span>
+            }
+        </p>
+        <p>
+            <i>Totale:</i> 
+            @(Model.Items.Sum(item => item.Quantity * item.Product.Price).ToString("C"))
+        </p>
+    </div>
+</div>

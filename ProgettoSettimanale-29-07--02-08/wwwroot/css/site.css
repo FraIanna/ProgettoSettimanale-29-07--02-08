@@ -18,5 +18,105 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #442121;
+}
+
+.custom-bg {
+    background-color: #623030;
+}
+
+.custom-bg-2 {
+    background-color: #570606;
+}
+
+.card{
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    color: white;
+}
+
+.card-title, .card-text{
+    padding: 10px;
+    background-color: #570606;
+    border-radius: 10px;
+}
+
+.list-item-cs {
+    background-color: #623030;
+    padding: 5px;
+    margin: 5px 0 ;
+    border-radius: inherit;
+}
+
+.custom-btn {
+    background-color: #623030;
+    color: white;
+    padding: .5em;
+    border-radius: 10px;
+    border: none;
+    border: 1px solid transparent;
+    font-weight: 500;
+    transition: all .2s ease;
+}
+
+.custom-btn:hover {
+    background-color: #6d2323;
+    border: 1px solid white;
+    box-shadow: 0px 0px 9px 2px;
+}
+
+.custom-input {
+    background-color: #623030;
+    padding: .5em;
+    border: none;
+    border-radius: 10px;
+    width: 3em;
+    outline: none;
+    color: white;
+}
+
+.table {
+    border: 1px solid white;
+    color: white;
+    background-color: #623030;
+}
+
+.custom-form-group {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.custom-form-group label {
+    padding: 10px;
+    background-color: #570606;
+    border-radius: 10px;
+    margin-bottom: 1em;
+    font-style: italic
+}
+
+.form-div {
+    background-color: #623030;
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 0px 0px 10px 3px
+}
+form {
+    background-color: #6d2323;
+    border-radius: 10px;
+}
+
+.form-control {
+    background-color: #6d2323;
+    color: white;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+.form-control:hover {
+    background-color: #6d2323;
+    color: white;
+    border: none;
+    border-bottom: 1px solid;
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgettoSettimanale_29_07__02_08.Context;
 using ProgettoSettimanale_29_07__02_08.DataLayer.Entities;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace ProgettoSettimanale_29_07__02_08.Controllers
 {
+    [Authorize(Policies.baseUser)]
     public class CartController : Controller
     {
         private readonly DataContext _dataContext;

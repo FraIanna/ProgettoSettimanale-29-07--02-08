@@ -30,6 +30,11 @@ namespace ProgettoSettimanale_29_07__02_08.Context
                     "IngredientProduct",
                     j => j.HasOne<Ingredient>().WithMany().HasForeignKey("IngredientsId"),
                     j => j.HasOne<Product>().WithMany().HasForeignKey("ProductsId"));
+
+            modelBuilder.Entity<User>()
+               .HasMany(u => u.Roles)
+               .WithMany(r => r.Users)
+               .UsingEntity(j => j.ToTable("RoleUser"));
         }
     }
 }

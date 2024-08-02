@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProgettoSettimanale_29_07__02_08.Context;
@@ -6,6 +7,7 @@ using System.Diagnostics;
 
 namespace ProgettoSettimanale_29_07__02_08.Controllers
 {
+    [Authorize(Policy = Policies.baseUser)]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

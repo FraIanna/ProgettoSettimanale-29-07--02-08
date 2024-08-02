@@ -3,57 +3,55 @@
 @{
     ViewData["Title"] = "CreateProduct";
 }
-
-<h1>CreateProduct</h1>
-
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateProduct">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhotoUrl" class="control-label"></label>
-                <input asp-for="PhotoUrl" class="form-control" />
-                <span asp-validation-for="PhotoUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeliveryTime" class="control-label"></label>
-                <input asp-for="DeliveryTime" class="form-control" />
-                <span asp-validation-for="DeliveryTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Ingredients</label>
-                <div id="ingredients-list">
-                    <div class="form-group">
-                        <input type="text" name="Ingredients[0].Name" class="form-control" placeholder="Ingredient Name" />
-                    </div>
+<div class="row custom-bg-2 text-light rounded p-3 shadow">
+    <h1>Crea Prodotto</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4 offset-md-4 form-div">
+            <form asp-action="CreateProduct" class="shadow">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="custom-form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <button type="button" class="btn btn-secondary" onclick="addIngredient()">Add Ingredient</button>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="custom-form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="custom-form-group">
+                    <label asp-for="PhotoUrl" class="control-label"></label>
+                    <input asp-for="PhotoUrl" class="form-control" />
+                    <span asp-validation-for="PhotoUrl" class="text-danger"></span>
+                </div>
+                <div class="custom-form-group">
+                    <label asp-for="DeliveryTime" class="control-label"></label>
+                    <input asp-for="DeliveryTime" class="form-control" />
+                    <span asp-validation-for="DeliveryTime" class="text-danger"></span>
+                </div>
+                <div class="custom-form-group">
+                    <label>Ingredients</label>
+                    <div id="ingredients-list">
+                        <div class="form-group">
+                            <input type="text" name="Ingredients[0].Name" class="form-control" placeholder="Ingrediente" />
+                        </div>
+                    </div>
+                    <button type="button" class="custom-btn mt-3" onclick="addIngredient()">Aggiungi ingrediente</button>
+                </div>
+                <div class="custom-form-group">
+                    <input type="submit" value="Inserisci Prodotto" class="custom-btn" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         let ingredientIndex = 1;
         function addIngredient() {

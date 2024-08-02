@@ -3,43 +3,41 @@
 @{
     ViewData["Title"] = "AllOrders";
 }
-
-<h1>ALlOrders</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Data Ordine</th>
-            <th>Utente</th>
-            <th>Indirizzo</th>
-            <th>Note</th>
-            <th>Evasi</th>
-            <th>Azioni</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model)
-        {
+<div class="row custom-bg-2 text-light rounded p-3 shadow">
+    <h1>Tutti gli ordini</h1>
+    <hr />
+    <table class="table">
+        <thead>
             <tr>
-                <td>@order.PlacedAt</td>
-                <td>@order.User.Email</td>
-                <td>@order.Address</td>
-                <td>@order.Notes</td>
-                <td>@order.Done</td>
-                <td>
-                    @if (!order.Done)
-                    {
-                        <form asp-action="MarkAsDone" method="post">
-                            <input type="hidden" name="id" value="@order.Id" />
-                            <button type="submit" class="btn btn-primary">Segna come evaso</button>
-                        </form>
-                    }
-                </td>
+                <th>Data Ordine</th>
+                <th>Utente</th>
+                <th>Indirizzo</th>
+                <th>Note</th>
+                <th>Evasi</th>
+                <th>Azioni</th>
             </tr>
-        }
-    </tbody>
-</table>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.PlacedAt</td>
+                    <td>@order.User.Email</td>
+                    <td>@order.Address</td>
+                    <td>@order.Notes</td>
+                    <td>@order.Done</td>
+                    <td>
+                        @if (!order.Done)
+                        {
+                            <form asp-action="MarkAsDone" method="post" class="bg-transparent">
+                                <input type="hidden" name="id" value="@order.Id" />
+                                <button type="submit" class="custom-btn">Segna come evaso</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </table>
+</div>
